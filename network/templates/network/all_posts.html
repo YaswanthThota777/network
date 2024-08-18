@@ -1,0 +1,58 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div class="content">
+    <h1>All Posts</h1>
+    {% if posts %}
+        {% for post in posts %}
+            {% if request.user != post.user %}
+            <div class="flexbox post-container">
+                <a id="user" href="{% url 'profile' post.user.username %}">{{ post.user.username|title }}</a>
+                <p id="content">{{ post.content }}</p>
+                <p id="timestamp">{{ post.timestamp }}</p>
+                {% if user.is_authenticated %}
+                <div class="interaction-section">
+                    <div class="like-and-comment">
+                        <span class="like-button" data-post-id="{{ post.id }}" data-liked="{{ post.user_has_liked }}">
+                            &#10084; {{ post.likes_count }} <!-- Filled heart if liked -->
+                        </span>
+                        <a href="#" class="comment-link" data-post-id="{{ post.id }}">Comment</a>
+                    </div>
+                    
+                    <div id="comment-section-{{ post.id }}" class="comment-section" style="display: none;">
+                        <h4>Comments:</h4>
+                        {% for comment in post.comments.all %}
+                            <p><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</p>
+                        {% empty %}
+                            <p>No comments yet.</p>
+                        {% endfor %}
+                        <form action="{% url 'add_comment' post.id %}" method="post">
+                            {% csrf_token %}
+                            <textarea name="comment" placeholder="Add a comment..." required></textarea>
+                            <button type="submit">Comment</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <!-- Pagination controls -->
+        <div class="pagination">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span>Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <p>No posts available.</p>
+    {% endif %}
+</div>
+{% endblock %}

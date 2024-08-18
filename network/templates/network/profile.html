@@ -1,0 +1,61 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+{% if user.is_authenticated %}
+    <h2>Account</h2>
+    <p>{{ username|title }}</p>
+    <p id="followers" data-followers="{{ followers_count }}">Followers: {{ followers_count }}</p>
+    <p id="following" data-following="{{ following_count }}">Following: {{ following_count }}</p>
+
+    {% if request.user != username %}
+    <button id="follow" data-following="{{ isfollowing }}" data-username="{{ username }}">
+        {% if isfollowing %}Unfollow{% else %}Follow{% endif %}
+    </button>
+    {% endif %}
+
+    <h3 style="padding: 5px;">Posts</h3>
+    {% if posts %}
+        {% for post in posts %}
+        <div class="flexbox post-container">
+            <a id="user" href="{% url 'profile' post.user.username %}">{{ post.user.username|title }}</a>
+            
+            {% if user.username == post.user.username %}
+            <span id="edit-button-{{ post.id }}" class="edit-link" data-post-id="{{ post.id }}">Edit</span>
+            <div id="edit-form-{{ post.id }}" style="display: none;">
+                <textarea id="edit-content-{{ post.id }}">{{ post.content }}</textarea>
+                <button id="save-button-{{ post.id }}" data-post-id="{{ post.id }}">Save</button>
+                <button id="cancel-button-{{ post.id }}" data-post-id="{{ post.id }}">Cancel</button>
+            </div>
+            {% endif %}
+            
+            <p id="content-{{ post.id }}" class="content">{{ post.content }}</p>
+            <p id="timestamp">{{ post.timestamp }}</p>
+            {% if user.is_authenticated %}
+            <div class="interaction-section">
+                <div class="like-and-comment">
+                    <span class="like-button" data-post-id="{{ post.id }}" data-liked="{{ post.user_has_liked }}">
+                        &#10084; {{ post.likes_count }}
+                    </span>
+                    <a href="#" class="comment-link" data-post-id="{{ post.id }}">Comment</a>
+                </div>
+                
+                <div id="comment-section-{{ post.id }}" class="comment-section" style="display: none;">
+                    <h4>Comments:</h4>
+                    {% for comment in post.comments.all %}
+                        <p><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</p>
+                    {% empty %}
+                        <p>No comments yet.</p>
+                    {% endfor %}
+                    <form action="{% url 'add_comment' post.id %}" method="post">
+                        {% csrf_token %}
+                        <textarea name="comment" placeholder="Add a comment..." required></textarea>
+                        <button type="submit">Comment</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+{% endblock %}

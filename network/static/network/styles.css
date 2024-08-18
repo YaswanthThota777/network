@@ -1,0 +1,131 @@
+#button {
+    background-color: rgb(0, 170, 255);
+    border-radius: 5px;
+    border: none; /* Remove default border */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Adjust padding for better button size */
+    cursor: pointer; /* Change cursor to pointer */
+    width:70px;
+}
+
+.flexbox {
+    border: 1px solid black;
+    width: 97%;
+    padding: 20px;
+    margin: 5px;
+}
+
+.post-container {
+    margin-bottom: 20px; 
+    display: flex;
+    flex-direction: column;
+}
+
+.post-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Adjust width for better layout */
+    max-width: 700px; /* Set a max-width */
+    margin-top: 5px;
+}
+
+.post-textarea {
+    width: 100%; /* Ensure textarea takes full width of the form */
+    max-width: 650px; /* Set a max-width */
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.content {
+    padding: 10px;
+    font-style: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000000; /* Ensure this is correct if needed */
+    margin-bottom: 0px;
+}
+
+#user {
+    font-style: inherit;
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #000000;
+}
+
+#timestamp {
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 500;
+    color: #7c7c7c;
+    margin-bottom: 0px;
+}
+
+#content {
+    font-style: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: rgb(0, 0, 0); 
+    margin-bottom: 0px;
+}
+
+#edit {
+    color: rgb(9, 116, 197);
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+
+.edit-link {
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.edit-link:hover {
+    text-decoration: none;
+}
+
+.post-container {
+    margin-bottom: 20px;
+}
+
+.interaction-section {
+    margin-top: 10px;
+}
+
+.like-and-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.like-button {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.like-button:hover {
+    background-color: #f0f0f0;
+}
+
+.comment-link {
+    display: block;
+    color: #7c7c7c;
+    text-decoration: none;
+}
+
+.comment-link:hover {
+    text-decoration: underline;
+}
+
+.comment-section {
+    margin-top: 10px;
+}
+
+.comment-section form {
+    margin-top: 10px; /* Space above the comment form */
+}
